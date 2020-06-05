@@ -1,25 +1,47 @@
 # TO-DO: Complete the selection_sort() function below
 def selection_sort(arr):
     # loop through n-1 elements
+    # need to look ahead without going out of bounds
+    # because last element will be sorted
     for i in range(0, len(arr) - 1):
         cur_index = i
         smallest_index = cur_index
         # TO-DO: find next smallest element
         # (hint, can do in 3 loc)
         # Your code here
-
-
+        # inner loop goes all the way to end
+        for j in range(cur_index + 1, len(arr)):
+            # print("i:",i,"j:", j,"====", arr) 
+            if arr[smallest_index] > arr[j]:
+                smallest_index = j
+                
+        
         # TO-DO: swap
         # Your code here
+        #
+        # temp = arr[i]
+        # arr[cur_index] = arr[smallest_index]
+        # arr[smallest_index] = temp
+        # cleaner as:
 
+        arr[cur_index], arr[smallest_index] = arr[smallest_index], arr[cur_index]
+       
     return arr
-
 
 # TO-DO:  implement the Bubble Sort function below
 def bubble_sort(arr):
-    # Your code here
+    # start with True to initiate
+    made_swap = True
 
-
+    while made_swap:
+        made_swap = False
+        for i in range(len(arr) - 1):
+            j = i + 1
+            # print("i:", i, "j:", j, "made_swap:", made_swap, "====", arr)
+        
+            if arr[i] > arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+                made_swap = True
     return arr
 
 '''
@@ -40,7 +62,28 @@ buckets.
 What is the time and space complexity of the counting sort algorithm?
 '''
 def counting_sort(arr, maximum=None):
-    # Your code here
+    counts = [0] * (maximum + 1)
+    
+    for val in arr:
+        counts[val] += 1
+
+    for i in range(0, range(counts)):
+        while counts[i] > 0:
+            arr[j] = i
+            j+=1
+            counts[i] -= 1
+
 
 
     return arr
+
+test_arr = [4,3,2,1]
+arr1 = [1, 5, 8, 4, 2, 9, 6, 0, 3, 7]
+arr2 = []
+arr3 = [0, 1, 2, 3, 4, 5]
+
+# selection_sort(arr1)
+# selection_sort(arr2)
+# selection_sort(arr3)
+# selection_sort(test_arr)
+bubble_sort(test_arr)
