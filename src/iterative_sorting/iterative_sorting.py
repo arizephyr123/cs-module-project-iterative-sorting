@@ -2,26 +2,24 @@
 def selection_sort(arr):
     # loop through n-1 elements
     # need to look ahead without going out of bounds
-    # because last element will be sorted
+    # because last element will be sorted in inner loop
     for i in range(0, len(arr) - 1):
         cur_index = i
         smallest_index = cur_index
-        # TO-DO: find next smallest element
-        # (hint, can do in 3 loc)
-        # Your code here
-        # inner loop goes all the way to end
+        # find next smallest element
+        # inner loop goes from arr[1] to arr[-1]
         for j in range(cur_index + 1, len(arr)):
             # print("i:",i,"j:", j,"====", arr) 
             if arr[smallest_index] > arr[j]:
                 smallest_index = j
                 
         
-        # TO-DO: swap
-        # Your code here
+        # swap for smallest for lower val
         #
         # temp = arr[i]
         # arr[cur_index] = arr[smallest_index]
         # arr[smallest_index] = temp
+        # 
         # cleaner as:
 
         arr[cur_index], arr[smallest_index] = arr[smallest_index], arr[cur_index]
@@ -60,32 +58,62 @@ showed up, we can construct a sorted set of the input data from the
 buckets. 
 
 What is the time and space complexity of the counting sort algorithm?
+
+time complexity is O(n)
 '''
-def count_sort(arr, maximum=None):
+def count_sort(arr, maximum=-1):
+    # if empty, return 
     if len(arr) == 0:
         return arr
-    counts = [0] * (maximum + 1)
+
+    # if max is not given then change default to highest value in max array
+    if maximum == -1:
+        # find max val in arr
+        maximum = max(arr)  
     
+    # holding space for all possible values from 0-maximum
+    counts = [0] * (maximum + 1) # [0, 1, 2, 3 ... max]
+
+    # looping through arr
     for val in arr:
+        # sending error for negative nums
+        if val < 0:
+            return 'Error, negative numbers not allowed in Count Sort'
+
+        # incrementing idex of counts for each value 
+        # ex: counts[4] += 1   
+        # counts index is same as value
+        # [0, 0, 0, 0, 1, 0, ... max]
         counts[val] += 1
 
-    for i in range(0, range(counts)):
+    # keeps track of the index of return arr
+    j=0
+    # loop through counts array
+    for i in range(len(counts)):
+        # while value has at least one count in original arr param
         while counts[i] > 0:
+            # remember, counts[i] is number of 'i' being counted
+            # counts[4] = 1 --> there was one 4 in the array
+            # arr[j]
             arr[j] = i
+            # iterate to next index in arr
             j+=1
+            # decrement that val count from counts arr
             counts[i] -= 1
-
-
 
     return arr
 
 test_arr = [4,3,2,1]
 arr1 = [1, 5, 8, 4, 2, 9, 6, 0, 3, 7]
 arr2 = []
-arr3 = [0, 1, 2, 3, 4, 5]
+arr3 = [0, 1,-2,  2, 3, 4, 5]
 
 # selection_sort(arr1)
 # selection_sort(arr2)
 # selection_sort(arr3)
 # selection_sort(test_arr)
-bubble_sort(test_arr)
+# bubble_sort(test_arr)
+print(count_sort(test_arr))
+print(count_sort(arr1))
+print(count_sort(arr2))
+print(count_sort(arr3))
